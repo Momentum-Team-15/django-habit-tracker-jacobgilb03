@@ -11,6 +11,7 @@ django-environ = "*"
 whitenoise = "*"
 django-registration-redux = "*"
 django-debug-toolbar = "*"
+gunicorn = "*"
 
 [dev-packages]
 
