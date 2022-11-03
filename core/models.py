@@ -6,13 +6,21 @@ class User(AbstractUser):
     pass
 
 class Habit(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=250)
+    metric=models.PositiveIntegerField()
     created_date = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    user = models.ForeignKey('User', on_delete=models.CASCADE, blank=True, null=True)
+    unit_of_measure = models.CharField(max_length=255)
+    description = models.TextField(null=True, blank=True)
+    user = models.ForeignKey('User', on_delete=models.CASCADE, related_name="habits")
 
     def __str__(self):
         return f"{self.name}"
 
 class Record(models.Model):
-    pass
+    habit = models.ForeignKey(Habit, on_delete=models.CASCADE, related_name="records")
+    date=models.DateField(auto_now_add=True)
+    amount=models.PositiveIntegerField()
+
+    def __str__(self):
+        return f"Record for {self.habit.name}"
