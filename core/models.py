@@ -12,15 +12,18 @@ class Habit(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     unit_of_measure = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)
-    user = models.ForeignKey('User', on_delete=models.CASCADE, related_name="habits")
+    user = models.ForeignKey('User', on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         return f"{self.name}"
 
 class Record(models.Model):
-    habit = models.ForeignKey(Habit, on_delete=models.CASCADE, related_name="records")
+    habit = models.ForeignKey('Habit', on_delete=models.CASCADE, related_name="records")
     date=models.DateField(auto_now_add=True)
     amount=models.PositiveIntegerField()
 
     def __str__(self):
         return f"Record for {self.habit.name}"
+
+class Date(models.Model):
+    year = models.ForeignKey('Year', on_delete=models.CASCADE, blank=True, null=True, related_name='date')
